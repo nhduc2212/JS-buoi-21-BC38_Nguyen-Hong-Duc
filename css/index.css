@@ -1,0 +1,199 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.dropdown-toggle::after{
+    display: none;
+}
+
+a[aria-expanded="false"]::before, a[aria-expanded="true"]::before{
+    display: none;
+}
+
+body{
+    background-image:linear-gradient(to right, #ACB6E5, #74ebd5)
+}
+
+#overlay{
+   transition: all 1s
+}
+
+.overlay.show{
+    display: block;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+.overlay.hide{
+    display: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    
+}
+
+.overlay .overlay-toggle{
+    z-index: 3;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: all 1s;
+
+}
+
+.overlay .overlay-dialog{
+    position: absolute;
+    transform: translateX(50%);
+    right: 50%;
+    width: 20%;
+    background-color: white;
+    padding: 10px 20px;
+    text-align: center;
+    z-index: 4;
+    transition: all 1s;
+}
+
+.overlay .overlay-dialog .dialog-header{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.overlay .overlay-dialog .dialog-header h2{
+    font-size: 40px;
+}
+
+.overlay .overlay-dialog .dialog-inputs{
+    margin-top: 20px;
+    margin-left: 10px;
+    width: 90%;
+}
+
+.overlay .overlay-dialog select{
+    margin-top: 20px;
+    width: 90%;
+    margin-left: 10px;
+    height: 40px;
+    border: 1px solid #ced4da;
+    padding-left: 10px;
+}
+
+.main{
+    margin: auto auto;
+    text-align: center;
+    width: 60%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 3px;
+}
+
+#content{
+    width: 100%;
+}
+
+table{
+    margin: auto auto;
+}
+table th{
+    width: 100px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+h2{
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #007bff;
+}
+
+button{
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    border-radius: 5px;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+button h4{
+margin-bottom: 0;
+font-size: 1rem;
+
+}
+
+input{
+    width: 90%;
+    margin-right: 0px;
+    margin-top: 50px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding-left:15px ;
+    
+}
+
+.input-container button{
+    width: 5%;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    margin: 0;
+    color: black;
+}
+
+.buttons-container{
+    margin: 20px 0;
+}
+
+.buttons-container button h3{
+font-size: 16px;
+}
+
+.buttons-container button{
+    background-color: #28a745;
+    border: none;
+    position: relative;
+    left: 10%;
+
+    }
+
+    .buttons-container button:last-of-type{
+        background-color: #dc3545;
+    }
+    
+table{
+    width: 95%;
+    margin: 20px auto;
+    margin-bottom: 40px;
+    
+}
+table th{
+    border: 1px solid #ced4da;
+    padding: 10px 5px;
+    color: #007bff;
+    font-family: 'Poppins', sans-serif;
+}
+
+table th:last-of-type{
+    width: 5%;
+}
+
+table tr th i{
+    margin: 0 5px;
+}
+
+.error-message {
+color: red;
+font-size: 13px;
+text-align: left;
+width: 85%;
+margin: 0 auto;
+}
+
