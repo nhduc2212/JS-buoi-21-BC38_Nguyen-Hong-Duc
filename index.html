@@ -152,32 +152,23 @@
           <h3>Bootstrap Sidebar</h3>
           <strong>BS</strong>
         </div>
-
-        <ul class="list-unstyled components">
+                <ul class="list-unstyled components">
           <li class="active">
-            <a
-              href="#homeSubmenu"
-              aria-expanded="false"
-              class="dropdown-toggle"
-            >
+            <a href="#">
               <i class="fas fa-home"></i>
               Home
             </a>
           </li>
           <li>
             <a href="#">
-              <i class="fas fa-briefcase"></i>
+              <i class="fa-solid fa-briefcase"></i>
               About
             </a>
-            <a
-              href="#pageSubmenu"
-              data-toggle="collapse"
-              aria-expanded="false"
-              class="dropdown-toggle"
-            >
-              <i class="fas fa-copy"></i>
+            <a href="#">
+              <i class="fa-solid fa-copy"></i>
               Pages
             </a>
+            
             <a href="#">
               <i class="fa-solid fa-link"></i>
               Portfolio
@@ -229,7 +220,7 @@
                 id="employee-type-input"
                 placeholder="Loại nhân viên"
               />
-              <button><i class="fa-solid fa-magnifying-glass"></i></button>
+              <button id="search-btn" onclick="searchBtn()"><i class="fa-solid fa-magnifying-glass"></i></button>
               <table>
                 <thead>
                   <tr>

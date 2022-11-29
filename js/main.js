@@ -4,6 +4,8 @@ $(document).ready(function () {
   });
 });
 
+var mode = "normal";
+
 var staffList = [];
 function createStaff() {
   var account = document.getElementById("account-value").value;
@@ -23,7 +25,7 @@ function createStaff() {
       return;
     }
     if (staffList[i].email === email) {
-      document.getElementById("accountError").innerHTML="Email đã tồn tại. Vui lòng lựa chọn email khác";
+      document.getElementById("emailError").innerHTML="Email đã tồn tại. Vui lòng lựa chọn email khác";
       return;
     }
   }
@@ -108,6 +110,22 @@ function printOutStaffInfo() {
   document.getElementById("staffTable").innerHTML = staffData;
 }
 
+function printOutSearchResult(result) {
+  var staffData = "";
+  for (var i = 0; i < result.length; i++) {
+    staffData += `<tr>
+    <td>${result[i].staffAccount}</td>
+    <td>${result[i].fullName}</td>
+    <td>${result[i].email}</td>
+    <td>${result[i].dow}</td>
+    <td>${result[i].position}</td>
+    <td>${result[i].sumOfSalary()}</td>
+    <td>${result[i].gradingStaff()}</td>
+    <td><button class="btn-config" onclick="toConfigMode('${i}')"><i class="fa-solid fa-pen-to-square"></i></button></td>
+    </tr>`;
+  }
+  document.getElementById("staffTable").innerHTML = staffData;
+}
 // --------------------VALIDATION----------------------------
 
 function duplicateValidation(targetedID,configuredVal){
@@ -347,6 +365,14 @@ function updateInfo(){
   var salary = document.getElementById("salary-value").value;
   var dateOfWork = document.getElementById("dow-value").value;
   var position = document.getElementById("position-value").value;
+  if (!validatingFunc()) return;
+
+  for (var i = 0; i < staffList.length; i++) {
+    if (staffList[i].email === email&&i!==index) {
+      document.getElementById("emailError").innerHTML="Email đã tồn tại. Vui lòng lựa chọn email khác";
+      return;
+    }
+  }
   staffList[index].staffAccount = account;
   staffList[index].fullName = fullName;
   staffList[index].email = email;
@@ -369,3 +395,20 @@ function removeStaff(){
   hideOverlay();
   return
 }
+
+function searchStaffByGrade(){
+  var searchValue= document.getElementById("employee-type-input").value;
+  var result =[];
+  for (var i =0; i<staffList.length;i++){
+    if(staffList[i].gradingStaff()==searchValue){
+      result.push(staffList[i])
+    }
+  }
+  printOutSearchResult(result);
+  document.getElementById("search-btn").style.backgroundColor="black";
+  document.getElementById("search-btn").style.color="white";
+  mode = "searching"
+}
+function searchBtn(){
+if(mode=="normal"){searchStaffByGrade()}else{printOutStaffInfo(); mode="normal"; document.getElementById("search-btn").style.backgroundColor="#e9ecef";
+document.getElementById("search-btn").style.color="black"}}

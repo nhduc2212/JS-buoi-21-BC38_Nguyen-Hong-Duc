@@ -210,5 +210,55 @@ margin: 0 auto;
 #remove-btn{
     background-color: red;
 }
+.dl-source-btn h5{
+    margin-left: 10px;
+    padding: 10px 25px;
+    background-color: white;
+    color: rgb(115,134,213);
+    display: inline-block;
+    border-radius: 5px;
+}
 
+.back-to-article-btn h5{
+    margin-left: 10px;
+    padding: 10px 41px;
+    background-color: #6d7fcc;
+    color: #fff;
+    display: inline-block;
+    border-radius: 5px;
+}
 
+.active .dl-source-btn {
+    display: none;
+}
+
+.active .back-to-article-btn {
+    display: none;
+}
+
+/* RESPONSIVE */
+@media screen and (max-width:1300px){
+    table th{
+        font-size: 10px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .overlay .overlay-dialog{
+        width: 50%;
+        right: 40%;
+        margin-top: 30px;
+    }
+    .main{
+        width: 80%;
+    }
+    table td{
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width:900px){
+    table th{
+        font-size: 10px;
+        font-family: 'Poppins', sans-serif;
+    }
+}
