@@ -17,16 +17,16 @@ function createStaff() {
 
   if (!validatingFunc()) return;
 
-  // for (var i = 0; i < staffList.length; i++) {
-  //   if (staffList[i].staffAccount === account) {
-  //     alert("This account is already exist");
-  //     return;
-  //   }
-  //   if (staffList[i].email === email) {
-  //     alert("This email is already exist");
-  //     return;
-  //   }
-  // }
+  for (var i = 0; i < staffList.length; i++) {
+    if (staffList[i].staffAccount === account) {
+      document.getElementById("accountError").innerHTML="Tài khoản đã tồn tại. Vui lòng lựa chọn tài khoản khác";
+      return;
+    }
+    if (staffList[i].email === email) {
+      document.getElementById("accountError").innerHTML="Email đã tồn tại. Vui lòng lựa chọn email khác";
+      return;
+    }
+  }
 
   var staff = new Staff(
     account,
@@ -36,7 +36,8 @@ function createStaff() {
     dob,
     salary,
     position,
-    dateOfWork
+    dateOfWork,
+    staffList.length
   );
 
   staffList.push(staff);
@@ -50,12 +51,30 @@ function showOverlay() {
   document.getElementById("overlay-dialog").style.top = "3%";
 }
 
-document.getElementById("overlay-toggle").onclick = function () {
+document.getElementById("overlay-toggle").onclick = function (){
   clearFormValue();
   clearValidation();
   document.getElementById("default-selection").selected = true;
   document.getElementById("overlay").classList.replace("show", "hide");
   document.getElementById("overlay-dialog").style.top = "-3%";
+  document.getElementById("add-btn").style.display="inline";
+  document.getElementById("remove-btn").style.display="none";
+  document.getElementById("update-btn").style.display="none";
+  document.getElementById("account-value").disabled=false
+
+}; 
+
+function hideOverlay() {
+  clearFormValue();
+  clearValidation();
+  document.getElementById("default-selection").selected = true;
+  document.getElementById("overlay").classList.replace("show", "hide");
+  document.getElementById("overlay-dialog").style.top = "-3%";
+  document.getElementById("add-btn").style.display="inline";
+  document.getElementById("remove-btn").style.display="none";
+  document.getElementById("update-btn").style.display="none";
+  document.getElementById("account-value").disabled=false;
+
 };
 
 document.getElementById("add-btn").onclick = function () {
@@ -83,19 +102,18 @@ function printOutStaffInfo() {
     <td>${staffList[i].position}</td>
     <td>${staffList[i].sumOfSalary()}</td>
     <td>${staffList[i].gradingStaff()}</td>
-    <td><button id=""><i class="fa-solid fa-pen-to-square"></i></button></td>
+    <td><button class="btn-config" onclick="toConfigMode('${i}')"><i class="fa-solid fa-pen-to-square"></i></button></td>
     </tr>`;
   }
   document.getElementById("staffTable").innerHTML = staffData;
-  document.getElementById
 }
 
 // --------------------VALIDATION----------------------------
 
 function duplicateValidation(targetedID,configuredVal){
 
-  for (var i = 0; i < staffList.length; i++) {
-    if (staffList[i].configuredVal.target === targetedID) {document.getElementById(configuredVal.errorCode).innerHTML=configuredVal.errorMessage;
+  for (var i = 0; i < staffList.length; i++) {staffList[i].targetVal=configuredVal.targetVal;
+    if (staffList[i].targetVal== targetedID) {document.getElementById(configuredVal.errorCode).innerHTML=configuredVal.errorMessage;
       return false;
     }    
 }return true;}
@@ -199,7 +217,8 @@ function validatingFunc() {
       errorCode: "accountError",
       regEx: /^[0-9]{4,6}$/g,
       errorMessage: "Tài khoản không được nhập vào giá trị chữ",
-    })&&duplicateValidation(account,{errorCode:"accountError", target:"staffAccount", errorMessage:"Tài khoản đã tồn tại, vui lòng chọn tài khoản khác"});
+    })
+    // &&duplicateValidation(account,{errorCode:"accountError", targetVal:"staffAccount", errorMessage:"Tài khoản đã tồn tại, vui lòng chọn tài khoản khác"});
 
   var fullNameValidation =
     emptyDetect(fullName, { errorCode: "fullNameError" }) &&
@@ -217,7 +236,8 @@ function validatingFunc() {
       regEx:
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
       errorMessage: "Email không đúng định dạng",
-    })&&duplicateValidation(email,{errorCode:"emailError", target:"email", errorMessage:"Email đã tồn tại, vui lòng lựa chọn email khác"})
+    })
+    // &&duplicateValidation(email,{errorCode:"emailError", targetVal:"email", errorMessage:"Email đã tồn tại, vui lòng lựa chọn email khác"})
     ;
 
   var passValidation =
@@ -289,4 +309,63 @@ function clearFormValue() {
   document.getElementById("salary-value").value = "";
   document.getElementById("position-value").value = "";
   document.getElementById("dow-value").value = "";
+}
+
+function findByAccount(account){
+  for (var i =0; i<staffList.length;i++){
+    if(staffList[i].staffAccount===account){
+      return i
+    }
+  }
+  alert("Lỗi id, Liên hệ với nhà phát triển để được hướng dẫn khắc phục sự cố")
+} 
+
+function toConfigMode(index){
+  showOverlay();
+  document.getElementById("add-btn").style.display="none";
+  document.getElementById("remove-btn").style.display="inline";
+  document.getElementById("update-btn").style.display="inline";
+  document.getElementById("account-value").value = staffList[index].staffAccount;
+  document.getElementById("name-value").value = staffList[index].fullName;
+  document.getElementById("email-value").value = staffList[index].email;
+  document.getElementById("password-value").value = staffList[index].password;
+  document.getElementById("dob-value").value = staffList[index].dob;
+  document.getElementById("salary-value").value = staffList[index].salary;
+  document.getElementById("position-value").value = staffList[index].position;
+  document.getElementById("dow-value").value = staffList[index].dow;
+  document.getElementById("account-value").disabled=true;
+  staffList[index]
+}
+
+function updateInfo(){
+  var account= document.getElementById("account-value").value;
+  var index = findByAccount(account);
+  var fullName = document.getElementById("name-value").value;
+  var email = document.getElementById("email-value").value;
+  var passWord = document.getElementById("password-value").value;
+  var dob = document.getElementById("dob-value").value;
+  var salary = document.getElementById("salary-value").value;
+  var dateOfWork = document.getElementById("dow-value").value;
+  var position = document.getElementById("position-value").value;
+  staffList[index].staffAccount = account;
+  staffList[index].fullName = fullName;
+  staffList[index].email = email;
+  staffList[index].password = passWord;
+  staffList[index].dob = dob;
+  staffList[index].salary = salary;
+  staffList[index].position = position;
+  staffList[index].dow = dateOfWork;
+  staffList[index].index=index;
+  printOutStaffInfo()
+  hideOverlay()
+}
+
+function removeStaff(){
+  account=document.getElementById("account-value").value;
+  var i = findByAccount(account);
+  staffList.splice(i,1);
+  printOutStaffInfo();
+  clearFormValue();
+  hideOverlay();
+  return
 }

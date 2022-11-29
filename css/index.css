@@ -197,3 +197,18 @@ width: 85%;
 margin: 0 auto;
 }
 
+#staffTable button{
+    width: fit-content;
+    padding: 5px 10px;
+    margin: 5px auto;
+    border: none;
+}
+#remove-btn, #update-btn{
+    display: none;
+}
+
+#remove-btn{
+    background-color: red;
+}
+
+
