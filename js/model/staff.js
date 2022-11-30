@@ -10,7 +10,7 @@ function Staff(account, fullName, email, passWord, dob, salary, position, dateOf
     this.index=index;
 
     this.sumOfSalary = function(){
-if(this.position==="Giám đốc"){return this.salary*3}else if(this.position="trưởng phòng"){return this.salary*2}else if(this.position="nhân viên"){return this.salary}
+if(this.position==="Giám đốc"){return this.salary*3}else if(this.position==="trưởng phòng"){return this.salary*2}else {return this.salary}
     }
 
     this.gradingStaff = function(){

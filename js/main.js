@@ -5,6 +5,7 @@ $(document).ready(function () {
 });
 
 var mode = "normal";
+var searchResult =[];
 
 var staffList = [];
 function createStaff() {
@@ -14,7 +15,7 @@ function createStaff() {
   var passWord = document.getElementById("password-value").value;
   var dob = document.getElementById("dob-value").value;
   var salary = +document.getElementById("salary-value").value;
-  var position = document.getElementById("position-value").value;
+  var positionInput = document.getElementById("position-value").value;
   var dateOfWork = +document.getElementById("dow-value").value;
 
   if (!validatingFunc()) return;
@@ -37,7 +38,7 @@ function createStaff() {
     passWord,
     dob,
     salary,
-    position,
+    positionInput,
     dateOfWork,
     staffList.length
   );
@@ -268,7 +269,7 @@ function validatingFunc() {
     regEx(password, {
       errorCode: "passwordError",
       regEx:
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,10}$/,
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#^?&])[A-Za-z\d@$!%*?#^&]{6,10}$/,
       errorMessage:
         "Mật khẩu phải chứa ít nhất 1 ký tự số, 1 ký tự in hoa, 1 ký tự đặc biệt",
     });
@@ -340,6 +341,35 @@ function findByAccount(account){
 
 function toConfigMode(index){
   showOverlay();
+  if(mode === "searching"){document.getElementById("add-btn").style.display="none";
+  document.getElementById("remove-btn").style.display="inline";
+  document.getElementById("update-btn").style.display="inline";
+  document.getElementById("account-value").value = searchResult[index].staffAccount;
+  document.getElementById("name-value").value = searchResult[index].fullName;
+  document.getElementById("email-value").value = searchResult[index].email;
+  document.getElementById("password-value").value = searchResult[index].password;
+  document.getElementById("dob-value").value = searchResult[index].dob;
+  document.getElementById("salary-value").value = searchResult[index].salary;
+  document.getElementById("position-value").value = searchResult[index].position;
+  document.getElementById("dow-value").value = searchResult[index].dow;
+  document.getElementById("account-value").disabled=true;}
+else{
+  document.getElementById("add-btn").style.display="none";
+  document.getElementById("remove-btn").style.display="inline";
+  document.getElementById("update-btn").style.display="inline";
+  document.getElementById("account-value").value = staffList[index].staffAccount;
+  document.getElementById("name-value").value = staffList[index].fullName;
+  document.getElementById("email-value").value = staffList[index].email;
+  document.getElementById("password-value").value = staffList[index].password;
+  document.getElementById("dob-value").value = staffList[index].dob;
+  document.getElementById("salary-value").value = staffList[index].salary;
+  document.getElementById("position-value").value = staffList[index].position;
+  document.getElementById("dow-value").value = staffList[index].dow;
+  document.getElementById("account-value").disabled=true;
+}}
+
+function toConfigModeSearch(index){
+  showOverlay();
   document.getElementById("add-btn").style.display="none";
   document.getElementById("remove-btn").style.display="inline";
   document.getElementById("update-btn").style.display="inline";
@@ -382,7 +412,8 @@ function updateInfo(){
   staffList[index].position = position;
   staffList[index].dow = dateOfWork;
   staffList[index].index=index;
-  printOutStaffInfo()
+  if(mode === "searching"){printOutSearchResult()}
+  else{printOutStaffInfo()}
   hideOverlay()
 }
 
@@ -398,17 +429,16 @@ function removeStaff(){
 
 function searchStaffByGrade(){
   var searchValue= document.getElementById("employee-type-input").value;
-  var result =[];
   for (var i =0; i<staffList.length;i++){
     if(staffList[i].gradingStaff()==searchValue){
-      result.push(staffList[i])
+      searchResult.push(staffList[i])
     }
   }
-  printOutSearchResult(result);
+  printOutSearchResult(searchResult);
   document.getElementById("search-btn").style.backgroundColor="black";
   document.getElementById("search-btn").style.color="white";
   mode = "searching"
 }
 function searchBtn(){
-if(mode=="normal"){searchStaffByGrade()}else{printOutStaffInfo(); mode="normal"; document.getElementById("search-btn").style.backgroundColor="#e9ecef";
+if(mode=="normal"){searchStaffByGrade()}else{printOutStaffInfo(); searchResult=[]; mode="normal"; document.getElementById("search-btn").style.backgroundColor="#e9ecef";
 document.getElementById("search-btn").style.color="black"}}
