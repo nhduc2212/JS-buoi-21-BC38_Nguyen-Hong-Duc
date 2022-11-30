@@ -412,7 +412,7 @@ function updateInfo(){
   staffList[index].position = position;
   staffList[index].dow = dateOfWork;
   staffList[index].index=index;
-  if(mode === "searching"){printOutSearchResult()}
+  if(mode === "searching"){searchStaffByGrade()}
   else{printOutStaffInfo()}
   hideOverlay()
 }
