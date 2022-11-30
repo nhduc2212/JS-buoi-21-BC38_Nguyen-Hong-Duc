@@ -429,6 +429,7 @@ function removeStaff(){
 
 function searchStaffByGrade(){
   var searchValue= document.getElementById("employee-type-input").value;
+  searchResult =[]
   for (var i =0; i<staffList.length;i++){
     if(staffList[i].gradingStaff()==searchValue){
       searchResult.push(staffList[i])
